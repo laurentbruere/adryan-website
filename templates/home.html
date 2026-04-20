@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+  <main class="site-main">
+    <div class="main-backdrop" aria-hidden="true"></div>
+    <div class="decor decor--calendar" aria-hidden="true">
+      <div class="calendar">
+        <div class="calendar__ribbon">Our adventures</div>
+        <div class="calendar__month">October 2024</div>
+        <div class="calendar__grid"></div>
+        <div class="calendar__accent calendar__accent--leaf"></div>
+        <div class="calendar__accent calendar__accent--cup"></div>
+      </div>
+    </div>
+    <div class="decor decor--clock" aria-hidden="true">
+      <div class="clock">
+        <div class="clock__face">
+          <span class="clock__n">XII</span>
+          <span class="clock__n clock__n--3">III</span>
+          <span class="clock__n clock__n--6">VI</span>
+          <span class="clock__n clock__n--9">IX</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-copy">
+      <h1 class="hero-heading">
+        <span>Boost your productivity</span>
+        <span>and time management</span>
+      </h1>
+    </div>
+  </main>
+{% endblock %}

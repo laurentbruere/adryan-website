@@ -1,0 +1,38 @@
+<div class="todo-panel">
+  <h2 id="planning-heading" class="todo-panel__title">Planning</h2>
+  <p class="todo-panel__lede">Capture tasks for the day. Check them off when done.</p>
+
+  <form method="post" class="todo-add">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="add">
+    <label class="todo-add__label" for="todo-title">New task</label>
+    <div class="todo-add__row">
+      <input id="todo-title" class="todo-input" type="text" name="title" maxlength="200" placeholder="What needs doing?" autocomplete="off" required>
+      <button type="submit" class="todo-btn todo-btn--amber">Add</button>
+    </div>
+  </form>
+
+  <ul class="todo-list">
+    {% for todo in todos %}
+    <li class="todo-item{% if todo.is_done %} todo-item--done{% endif %}">
+      <span class="todo-item__text">{{ todo.title }}</span>
+      <div class="todo-item__actions">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="toggle">
+          <input type="hidden" name="id" value="{{ todo.pk }}">
+          <button type="submit" class="todo-btn todo-btn--forest todo-btn--small">{% if todo.is_done %}Undo{% else %}Done{% endif %}</button>
+        </form>
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="id" value="{{ todo.pk }}">
+          <button type="submit" class="todo-btn todo-btn--cream todo-btn--small">Remove</button>
+        </form>
+      </div>
+    </li>
+    {% empty %}
+    <li class="todo-empty">No tasks yet. Add one above to get started.</li>
+    {% endfor %}
+  </ul>
+</div>

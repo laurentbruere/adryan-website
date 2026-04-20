@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Planning{% endblock %}
+
+{% block content %}
+  <main class="planning-main">
+    <section id="planning" class="content-strip content-strip--page" aria-labelledby="planning-heading">
+      {% include "partials/todo_panel.html" %}
+    </section>
+  </main>
+{% endblock %}
