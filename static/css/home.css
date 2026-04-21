@@ -591,6 +591,375 @@ body {
   border-bottom: none;
 }
 
+/* Timetable (home hero + todo-panel card) */
+.hero-copy--timetable {
+  max-width: min(58rem, 96%);
+  width: 100%;
+}
+
+.hero-copy--feedback {
+  max-width: min(36rem, 96%);
+  width: 100%;
+}
+
+.feedback-panel .todo-panel__lede {
+  margin-bottom: 1rem;
+}
+
+.feedback-messages {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.feedback-messages__item {
+  padding: 0.55rem 0.75rem;
+  border-radius: 4px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.9rem;
+}
+
+.feedback-messages__item--success {
+  background: rgba(120, 150, 110, 0.25);
+  color: #2d3d28;
+  border: 1px solid rgba(80, 110, 70, 0.35);
+}
+
+.feedback-messages__item--error {
+  background: rgba(180, 100, 90, 0.2);
+  color: #4a2520;
+  border: 1px solid rgba(140, 70, 60, 0.35);
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.feedback-form__label {
+  font-family: "Cinzel", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(80, 55, 40, 0.85);
+  margin-top: 0.35rem;
+}
+
+.feedback-form__label:first-of-type {
+  margin-top: 0;
+}
+
+.feedback-form__optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  color: rgba(80, 55, 40, 0.55);
+}
+
+.feedback-form__textarea {
+  resize: vertical;
+  min-height: 8rem;
+  line-height: 1.45;
+}
+
+.feedback-form__actions {
+  margin-top: 0.5rem;
+}
+
+.timetable-panel .todo-panel__lede {
+  margin-bottom: 1rem;
+}
+
+.timetable-range {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-family: "Cinzel", "Playfair Display", serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #5c4030;
+}
+
+.timetable-range__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.timetable-range__label {
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(80, 55, 40, 0.75);
+}
+
+.timetable-range select {
+  min-width: 5.5rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(80, 55, 40, 0.28);
+  border-radius: 4px;
+  background: rgba(255, 252, 245, 0.95);
+  color: var(--ink);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.85rem;
+}
+
+.timetable-range__submit {
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(80, 55, 40, 0.35);
+  border-radius: 4px;
+  background: rgba(212, 165, 116, 0.45);
+  color: #4a3224;
+  font-family: "Cinzel", serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.timetable-range__submit:hover {
+  background: rgba(212, 165, 116, 0.65);
+}
+
+.timetable-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: min(70vh, 36rem);
+  margin: 0 -0.15rem;
+  padding: 0 0.15rem 0.15rem;
+}
+
+.timetable-grid {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.timetable-grid th,
+.timetable-grid td {
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid rgba(80, 55, 40, 0.22);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.timetable-grid thead th {
+  font-family: "Cinzel", "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #6b4a3a;
+  background: rgba(255, 250, 242, 0.85);
+}
+
+.timetable-grid__corner {
+  text-align: left;
+  letter-spacing: 0.08em;
+}
+
+.timetable-grid tbody th[scope="row"] {
+  font-family: "Cinzel", serif;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #6b4a3a;
+  background: rgba(255, 250, 242, 0.75);
+  text-align: center;
+}
+
+.timetable-grid tbody tr:nth-child(even) td,
+.timetable-grid tbody tr:nth-child(even) th[scope="row"] {
+  background: rgba(240, 232, 216, 0.55);
+}
+
+.timetable-grid tbody td:hover {
+  background: rgba(255, 248, 235, 0.95);
+}
+
+.timetable-grid__cell {
+  padding: 0;
+  vertical-align: stretch;
+}
+
+.timetable-cell {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 0;
+  border-left: 3px solid transparent;
+}
+
+.timetable-cell--low {
+  border-left-color: rgba(70, 110, 130, 0.55);
+}
+
+.timetable-cell--medium {
+  border-left-color: rgba(170, 125, 60, 0.65);
+}
+
+.timetable-cell--high {
+  border-left-color: rgba(150, 45, 40, 0.78);
+}
+
+.timetable-grid tbody tr:nth-child(even) .timetable-cell {
+  background: rgba(240, 232, 216, 0.35);
+}
+
+.timetable-cell:hover {
+  background: rgba(255, 248, 235, 0.98);
+}
+
+.timetable-dialog {
+  border: 1px solid rgba(80, 55, 40, 0.32);
+  border-radius: 8px;
+  padding: 0;
+  max-width: min(22rem, 94vw);
+  background: rgba(255, 252, 245, 0.98);
+  color: var(--ink);
+  box-shadow: 0 0.5rem 2rem rgba(40, 28, 20, 0.22);
+}
+
+.timetable-dialog::backdrop {
+  background: rgba(40, 28, 20, 0.42);
+}
+
+.timetable-dialog__form {
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.timetable-dialog__title {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5c4030;
+}
+
+.timetable-dialog__label {
+  font-family: "Cinzel", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(80, 55, 40, 0.8);
+}
+
+.timetable-dialog__input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(80, 55, 40, 0.28);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.timetable-dialog__importance {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.timetable-dialog__legend {
+  padding: 0;
+  margin: 0 0 0.45rem;
+  font-family: "Cinzel", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(80, 55, 40, 0.8);
+}
+
+.timetable-dialog__radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.timetable-dialog__radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.88rem;
+  color: #4a3224;
+  cursor: pointer;
+}
+
+.timetable-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.timetable-dialog__btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  font-family: "Cinzel", serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid rgba(80, 55, 40, 0.35);
+}
+
+.timetable-dialog__btn--primary {
+  background: rgba(212, 165, 116, 0.55);
+  color: #3d2818;
+}
+
+.timetable-dialog__btn--primary:hover {
+  background: rgba(212, 165, 116, 0.75);
+}
+
+.timetable-dialog__btn--muted {
+  background: rgba(255, 255, 255, 0.6);
+  color: #5c4030;
+}
+
+.timetable-dialog__btn--muted:hover {
+  background: rgba(255, 240, 228, 0.9);
+}
+
+.timetable-dialog__btn--ghost {
+  background: transparent;
+  color: rgba(80, 55, 40, 0.75);
+  border-color: transparent;
+}
+
+.timetable-dialog__btn--ghost:hover {
+  color: #3d2818;
+}
+
 @media (max-width: 720px) {
   .site-header {
     flex-direction: column;

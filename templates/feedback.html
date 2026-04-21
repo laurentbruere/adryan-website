@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+  <main class="site-main">
+    <div class="main-backdrop" aria-hidden="true"></div>
+    <div class="decor decor--calendar" aria-hidden="true">
+      <div class="calendar">
+        <div class="calendar__ribbon">Our adventures</div>
+        <div class="calendar__month">October 2024</div>
+        <div class="calendar__grid"></div>
+        <div class="calendar__accent calendar__accent--leaf"></div>
+        <div class="calendar__accent calendar__accent--cup"></div>
+      </div>
+    </div>
+    <div class="decor decor--clock" aria-hidden="true">
+      <div class="clock">
+        <div class="clock__face">
+          <span class="clock__n">XII</span>
+          <span class="clock__n clock__n--3">III</span>
+          <span class="clock__n clock__n--6">VI</span>
+          <span class="clock__n clock__n--9">IX</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-copy hero-copy--feedback">
+      <section class="todo-panel feedback-panel" aria-labelledby="feedback-heading">
+        <h1 id="feedback-heading" class="todo-panel__title">Feedback</h1>
+        <p class="todo-panel__lede">Share thoughts, ideas, or issues. We read every message.</p>
+
+        {% if messages %}
+          <ul class="feedback-messages" role="status">
+            {% for message in messages %}
+              <li class="feedback-messages__item feedback-messages__item--{{ message.level_tag }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <form method="post" class="feedback-form">
+          {% csrf_token %}
+          <label class="feedback-form__label" for="feedback-name">Name <span class="feedback-form__optional">(optional)</span></label>
+          <input id="feedback-name" class="todo-input" type="text" name="name" maxlength="120" autocomplete="name" placeholder="Your name">
+
+          <label class="feedback-form__label" for="feedback-email">Email <span class="feedback-form__optional">(optional)</span></label>
+          <input id="feedback-email" class="todo-input" type="text" name="email" maxlength="254" autocomplete="email" placeholder="you@example.com">
+
+          <label class="feedback-form__label" for="feedback-message">Message</label>
+          <textarea id="feedback-message" class="todo-input feedback-form__textarea" name="message" rows="6" maxlength="4000" placeholder="What would you like us to know?" required></textarea>
+
+          <div class="feedback-form__actions">
+            <button type="submit" class="todo-btn todo-btn--forest">Send feedback</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Timetable{% endblock %}
+
+{% block content %}
+  <main class="site-main">
+    <div class="main-backdrop" aria-hidden="true"></div>
+    <div class="decor decor--calendar" aria-hidden="true">
+      <div class="calendar">
+        <div class="calendar__ribbon">Our adventures</div>
+        <div class="calendar__month">October 2024</div>
+        <div class="calendar__grid"></div>
+        <div class="calendar__accent calendar__accent--leaf"></div>
+        <div class="calendar__accent calendar__accent--cup"></div>
+      </div>
+    </div>
+    <div class="decor decor--clock" aria-hidden="true">
+      <div class="clock">
+        <div class="clock__face">
+          <span class="clock__n">XII</span>
+          <span class="clock__n clock__n--3">III</span>
+          <span class="clock__n clock__n--6">VI</span>
+          <span class="clock__n clock__n--9">IX</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-copy hero-copy--timetable">
+      <section class="todo-panel timetable-panel" aria-labelledby="timetable-heading">
+        <h1 id="timetable-heading" class="todo-panel__title">Weekly schedule</h1>
+        <p class="todo-panel__lede">Choose which hours to show, then click a cell to add a session and set its importance.</p>
+        <form class="timetable-range" method="get" action="{% url 'timetable' %}">
+          <label class="timetable-range__field">
+            <span class="timetable-range__label">From</span>
+            <select name="from" aria-label="Start hour (inclusive)">
+              {% for h in hour_choices %}
+                <option value="{{ h }}"{% if h == range_from %} selected{% endif %}>{{ h|stringformat:"02d" }}:00</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label class="timetable-range__field">
+            <span class="timetable-range__label">To</span>
+            <select name="to" aria-label="End hour (inclusive)">
+              {% for h in hour_choices %}
+                <option value="{{ h }}"{% if h == range_to %} selected{% endif %}>{{ h|stringformat:"02d" }}:00</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit" class="timetable-range__submit">Show hours</button>
+        </form>
+        <div class="timetable-scroll" role="region" aria-label="Weekly timetable grid" tabindex="0">
+          <table class="timetable-grid">
+            <thead>
+              <tr>
+                <th scope="col" class="timetable-grid__corner">Time</th>
+                {% for day in weekdays %}
+                  <th scope="col">{{ day.label }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+                <tr>
+                  <th scope="row">{{ row.hour|stringformat:"02d" }}:00</th>
+                  {% for cell in row.cells %}
+                    <td class="timetable-grid__cell">
+                      <button
+                        type="button"
+                        class="timetable-cell timetable-cell--{{ cell.importance }}"
+                        data-day="{{ cell.day_key }}"
+                        data-hour="{{ cell.hour }}"
+                        data-label="{{ cell.label }}"
+                        data-importance="{{ cell.importance }}"
+                        aria-label="Edit timetable slot"
+                      >{{ cell.display }}</button>
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <dialog id="timetable-slot-dialog" class="timetable-dialog" aria-labelledby="timetable-dialog-title">
+          <form id="timetable-slot-form" method="post" action="{% url 'timetable' %}" class="timetable-dialog__form">
+            {% csrf_token %}
+            <input type="hidden" name="range_from" value="{{ range_from }}">
+            <input type="hidden" name="range_to" value="{{ range_to }}">
+            <input type="hidden" name="weekday" id="timetable-slot-weekday" value="">
+            <input type="hidden" name="hour" id="timetable-slot-hour" value="">
+            <h2 id="timetable-dialog-title" class="timetable-dialog__title">Edit slot</h2>
+            <label class="timetable-dialog__label" for="timetable-slot-label">What is this time for?</label>
+            <input id="timetable-slot-label" class="timetable-dialog__input" type="text" name="label" maxlength="200" placeholder="e.g. Deep work, gym, rest" autocomplete="off">
+            <fieldset class="timetable-dialog__importance">
+              <legend class="timetable-dialog__legend">Importance</legend>
+              <div class="timetable-dialog__radios">
+                <label class="timetable-dialog__radio-label"><input type="radio" name="importance" value="low"> Low</label>
+                <label class="timetable-dialog__radio-label"><input type="radio" name="importance" value="medium" checked> Medium</label>
+                <label class="timetable-dialog__radio-label"><input type="radio" name="importance" value="high"> High</label>
+              </div>
+            </fieldset>
+            <div class="timetable-dialog__actions">
+              <button type="submit" class="timetable-dialog__btn timetable-dialog__btn--primary">Save</button>
+              <button type="submit" name="action" value="clear" class="timetable-dialog__btn timetable-dialog__btn--muted">Clear</button>
+              <button type="button" class="timetable-dialog__btn timetable-dialog__btn--ghost" data-close-dialog>Cancel</button>
+            </div>
+          </form>
+        </dialog>
+      </section>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var dialog = document.getElementById("timetable-slot-dialog");
+      var form = document.getElementById("timetable-slot-form");
+      if (!dialog || !form) return;
+      var weekdayEl = document.getElementById("timetable-slot-weekday");
+      var hourEl = document.getElementById("timetable-slot-hour");
+      var labelEl = document.getElementById("timetable-slot-label");
+      document.querySelectorAll(".timetable-cell").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          weekdayEl.value = btn.getAttribute("data-day") || "";
+          hourEl.value = btn.getAttribute("data-hour") || "";
+          labelEl.value = btn.getAttribute("data-label") || "";
+          var imp = btn.getAttribute("data-importance") || "medium";
+          form.querySelectorAll('input[name="importance"]').forEach(function (r) {
+            r.checked = r.value === imp;
+          });
+          dialog.showModal();
+          labelEl.focus();
+        });
+      });
+      var closeBtn = form.querySelector("[data-close-dialog]");
+      if (closeBtn) closeBtn.addEventListener("click", function () { dialog.close(); });
+      dialog.addEventListener("click", function (e) {
+        if (e.target === dialog) dialog.close();
+      });
+    })();
+  </script>
+{% endblock %}
